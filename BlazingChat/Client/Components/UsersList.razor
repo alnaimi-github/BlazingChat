@@ -1,0 +1,39 @@
+﻿@using System.Net.Http.Headers
+@inject HttpClient Client
+
+<h3>Users</h3>
+<ul class="list-group list-group-flush">
+    @if (Loading)
+    {
+        <li class="list-group-item">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Loading...
+        </li>
+    }
+    else
+    {
+        foreach (var user in Users)
+        {
+            <li class="list-group-item" @onclick="() => HandleUserClick(user)">
+                @user.Name
+                <span class="badge rounded-pill bg-@(user.IsOnline ? "success" : "danger")">.</span>
+            </li>
+        }
+    }
+</ul>
+
+@code {
+    [Parameter]
+    public EventCallback<UserDto> OnUserSelected { get; set; }
+
+    [Parameter]
+    public bool Loading { get; set; }
+
+    [Parameter]
+    public ICollection<UserDto> Users { get; set; } = default!;
+
+    private async Task HandleUserClick(UserDto user)
+    {
+        await OnUserSelected.InvokeAsync(user);
+    }
+}

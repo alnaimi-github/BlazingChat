@@ -1,0 +1,9 @@
+﻿
+.messages-window
+{
+    height: calc(100vh - 75px);
+}
+.topbar-name {
+    border: 1px solid #5e10d2;
+    padding: 2px 5px;
+}
